@@ -1,0 +1,17 @@
+CACHE MANIFEST
+# v1
+# Generated on 2026-07-26 04:59:59.138916
+
+CACHE:
+index.html
+includes/joystick.png
+includes/style.css
+includes/script.js
+src/utils.mjs
+src/main.js
+src/ps4/userland.mjs
+src/ps4/constants.js
+src/ps4/offsets.mjs
+
+NETWORK:
+*
