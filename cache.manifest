@@ -1,13 +1,12 @@
 CACHE MANIFEST
 # v1
-# Generated on 2026-07-26 05:00:28.243310
+# Generated on 2026-07-26 05:01:17.248082
 
 CACHE:
 index.html
 includes/joystick.png
 includes/style.css
 includes/script.js
-src/utils.mjs
 src/worker.js
 src/lapse.js
 src/misc.js
@@ -18,9 +17,7 @@ src/payload.bin
 src/loader.js
 src/ps4/userland.js
 src/ps4/kernel.js
-src/ps4/userland.mjs
 src/ps4/constants.js
-src/ps4/offsets.mjs
 src/ps4/patches/900.bin
 src/ps4/patches/1000.bin
 src/ps4/patches/800.bin
