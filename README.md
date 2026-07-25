@@ -18,10 +18,10 @@
 
 ## Supported by This Repository
 
-|               | CSSFontFace |
-| :------------ | :---------- |
-| PlayStation 4 | 9.00        |
-| PlayStation 5 | N/A         |
+|               | CSSFontFace | Kernel Exploit |
+| :------------ | :---------- |:-------------- |
+| PlayStation 4 | 6.00-11.02  | 7.00-11.02     |
+| PlayStation 5 | N/A         | N/A            |
 
 ## Limitations
 
