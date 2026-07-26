@@ -38,6 +38,16 @@ async function doJb() {
 
     logger.info("===END===");
 
+    // Check if system is already jailbroken via setuid(0) ROP call (syscall 0x17 = 23)
+    const setuid_fn = new NativeFunction(0x17, "number");
+    const setuid_res = setuid_fn.invoke(0);
+    logger.info(`Early jailbreak check (setuid 0) returned: ${setuid_res}`);
+
+    if (setuid_res === 0) {
+      logger.info("System is ALREADY jailbroken! Skipping kernel exploit chain to prevent Kernel Panic.");
+      return;
+    }
+
     await load_script("src/loader.js");
     await load_script("src/workers.js");
 
