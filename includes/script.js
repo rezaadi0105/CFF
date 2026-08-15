@@ -1,11 +1,18 @@
-let timerId = null; 
+let timerId = null;
 const label = document.getElementById('autoJbLabel');
 const checkbox = document.getElementById('autoJbInput');
+const delayInput = document.getElementById('autoJbDelayInput');
 const jeilbrekBtn = document.getElementById('jeilbrek');
 const UAElement = document.getElementById("UA");
 
+// Auto Jailbreak Config
+const autoJbDefault = false;
 const storedAutoJb = localStorage.getItem("autoJb");
-let autoJbValue = storedAutoJb !== null ? storedAutoJb === "true" : false;
+let autoJbValue = storedAutoJb !== null ? storedAutoJb === "true" : autoJbDefault;
+
+const storedAutoJbDelay = localStorage.getItem("autoJbDelay");
+let autoJbDelay = storedAutoJbDelay !== null ? parseInt(storedAutoJbDelay, 10) : 5;
+if (isNaN(autoJbDelay) || autoJbDelay < 1) autoJbDelay = 5;
 
 // choose one of kernel exploits
 var exploitChain = localStorage.getItem("exploitChain") || "lapse";
@@ -21,12 +28,21 @@ kexForm.addEventListener("change", function (event) {
     exploitChain = event.target.value;
 });
 
+const reloadBtn = document.getElementById('reloadBtn');
+
 // jailbreak execution
-jeilbrekBtn.addEventListener("click", function (e){
+jeilbrekBtn.addEventListener("click", function (e) {
     jeilbrekBtn.disabled = true;
     stopInterval();
     doJb();
 });
+
+if (reloadBtn) {
+    reloadBtn.addEventListener("click", function () {
+        stopInterval();
+        window.location.reload();
+    });
+}
 
 checkbox.addEventListener('change', function () {
     localStorage.setItem("autoJb", checkbox.checked);
@@ -38,7 +54,22 @@ checkbox.addEventListener('change', function () {
     stopInterval();
 });
 
-function stopInterval(){
+if (delayInput) {
+    delayInput.value = autoJbDelay;
+    delayInput.addEventListener("change", function () {
+        let val = parseInt(delayInput.value, 10);
+        if (isNaN(val) || val < 1) val = 1;
+        if (val > 99) val = 99;
+        delayInput.value = val;
+        autoJbDelay = val;
+        localStorage.setItem("autoJbDelay", val);
+        if (checkbox.checked && jeilbrekBtn.disabled === false) {
+            jailbreakCountdown();
+        }
+    });
+}
+
+function stopInterval() {
     if (timerId !== null) {
         clearInterval(timerId);
         timerId = null;
@@ -46,17 +77,17 @@ function stopInterval(){
     label.textContent = "Auto Jailbreak";
 }
 
-function jailbreakCountdown() {   
+function jailbreakCountdown() {
     stopInterval();
 
-    let countdown = 5;
-    label.textContent = `Auto Jailbreaking in: ${countdown}`;
+    let countdown = autoJbDelay;
+    label.textContent = `Auto Jailbreaking in: ${countdown}s`;
     timerId = setInterval(() => {
         countdown--;
-        label.textContent = `Auto Jailbreaking in: ${countdown}`;
+        label.textContent = `Auto Jailbreaking in: ${countdown}s`;
 
         if (countdown < 0) {
-            jeilbrekBtn.disabled = true; 
+            jeilbrekBtn.disabled = true;
             clearInterval(timerId);
             timerId = null;
             label.textContent = 'Executing';
@@ -81,7 +112,7 @@ function displayCacheProgress() {
     }, 3000);
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     // Cache handling
     if (window.applicationCache) {
         window.applicationCache.addEventListener("progress", cacheProgress, false);
@@ -98,6 +129,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // apply autojb localStorage value
     checkbox.checked = autoJbValue;
+    if (delayInput) delayInput.value = autoJbDelay;
 
     if (autoJbValue) jailbreakCountdown();
 });
