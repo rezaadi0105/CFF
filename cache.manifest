@@ -1,8 +1,9 @@
 CACHE MANIFEST
 # v1
-# Generated on 2026-08-19 10:05:56.442006
+# Generated on 2026-08-19 10:06:49.473620
 
 CACHE:
+cache.html
 index.html
 includes/joystick.png
 includes/style.css

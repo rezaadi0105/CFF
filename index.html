@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" manifest="cache.manifest">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CSSFontFace exploit</title>
   <link rel="stylesheet" href="includes/style.css">
+
+  <!-- Cache -->
+  <script>
+  if (window.applicationCache.status=='0'){window.location.replace("cache.html");}
+  </script>
 </head>
 <body>
   <div class="app-container">
