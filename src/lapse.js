@@ -555,10 +555,12 @@ async function double_free_reqs2() {
 
     const tcp_state = arw.view(info_addr).getInt8(0);
     logger.debug(`tcp_state: ${tcp_state}`);
-    logger.info("If script stuck more than 15 seconds, shutdown your console then try again !!");
+   // logger.info("If script stuck more than 15 seconds, shutdown your console then try again !!");
 
     mem.free(info_addr);
     mem.free(info_size_addr);
+
+    logger.info("If script stuck more than 15 seconds, shutdown your console then try again !!");
 
     if (outs[0] !== SCE_KERNEL_ERROR_ESRCH && tcp_state !== TCPS_ESTABLISHED) {
       // PANIC: double free on the 0x80 malloc zone. important kernel
@@ -566,6 +568,8 @@ async function double_free_reqs2() {
       process_aio(AIO_OP_DELETE, aio_ids, which_req);
       won_race = true;
     }
+
+    logger.info("If script stuck more than 15 seconds, shutdown your console then try again yayayyaya!!");
 
     await race_task;
 
